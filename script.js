@@ -50,3 +50,34 @@ document.addEventListener('keydown', function(event) {
         closeAllSkills();
     }
 });
+
+// === Contact Obfuscation ===
+function deobfuscateContacts() {
+    // Email: alborz.sabet@gmail.com (encoded as reversed base64-like string)
+    const emailData = 'bW9jLmxpYW1nQHRlYmFzLnpyb2JsYQ=='; // reversed email in base64
+    const email = atob(emailData).split('').reverse().join('');
+    
+    // Phone: +45 28961139 (simple character shift)
+    const phoneData = '+67*5067;;61';
+    const phone = phoneData.split('').map(c => {
+        if (c >= '0' && c <= '9') return String.fromCharCode(c.charCodeAt(0) - 2);
+        if (c === '*') return '4';
+        if (c === ';') return '9';
+        return c;
+    }).join('');
+    
+    // Set the links
+    const emailLink = document.getElementById('email-link');
+    const phoneLink = document.getElementById('phone-link');
+    
+    if (emailLink) {
+        emailLink.href = `mailto:${email}`;
+    }
+    
+    if (phoneLink) {
+        phoneLink.href = `tel:${phone}`;
+    }
+}
+
+// Deobfuscate when page loads
+document.addEventListener('DOMContentLoaded', deobfuscateContacts);
