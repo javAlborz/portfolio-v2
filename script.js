@@ -58,10 +58,11 @@ function deobfuscateContacts() {
     const email = atob(emailData).split('').reverse().join('');
     
     // Phone: +45 28961139 (simple character shift)
-    const phoneData = '+67*5067;;61';
+    const phoneData = '+67*4:;8335;';
     const phone = phoneData.split('').map(c => {
         if (c >= '0' && c <= '9') return String.fromCharCode(c.charCodeAt(0) - 2);
-        if (c === '*') return '4';
+        if (c === '*') return ' ';
+        if (c === ':') return '8';
         if (c === ';') return '9';
         return c;
     }).join('');
